@@ -1,0 +1,57 @@
+﻿@model Intake
+@{
+    Layout = "_ManageLayout";
+    ViewData["Title"] = Model is null ? "New Intake" : $"Updating {Model.IntakeName}";
+}
+
+<div class="container">
+    <form method="post" class="bg-info text-dark  p-5" asp-action="@(Model is null?"AddIntake":"UpdateIntake")" asp-controller="Manage">
+        <h2 class="text-center">@(Model is null ? "Create New Intake" : $"Updating {Model.IntakeName}")</h2>
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="row mb-3 mx-0 justify-content-center">
+            @if (Model != null)
+            {
+                <input hidden asp-for="IntakeId" />
+            }
+            <div class="col-12">
+                <label asp-for="IntakeName" class="fw-bold d-block form-label mt-3">Name</label>
+                <input asp-for="IntakeName" class="form-control" />
+                <span asp-validation-for="IntakeName"></span>
+            </div>
+
+            <div class="col-12">
+                <label asp-for="ProgramId" class="fw-bold d-block form-label mt-3">Program</label>
+                <select asp-for="ProgramId" class="form-select" asp-items="@ViewBag.Programs">
+                    <option value="" selected>Choose...</option>
+                </select>
+                <span asp-validation-for="ProgramId"></span>
+            </div>
+
+            <label asp-for="IsOpen" class="col-12 fw-bold d-inline-block form-label mt-3">Open:</label>
+            <div class="d-inline-block">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" id="yesopen" asp-for="IsOpen" type="radio" value="true">
+                    <label class="form-check-label" for="yesopen" asp-for="IsOpen">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" id="notopen" asp-for="IsOpen" type="radio" value="false">
+                    <label class="form-check-label" for="notopen" asp-for="IsOpen">No</label>
+                </div>
+            </div>
+            <span asp-validation-for="IsOpen"></span>
+
+        </div>
+        <div class="mt-2 d-flex justify-content-end gap-3">
+            @if (Model != null)
+            {
+                <input type="hidden" name="ActionName" value="Update" />
+            }
+            <input type="submit" value="@(Model is null?"Add":"Update")" class="btn btn-success d-inline-block  px-5" />
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial">
+}

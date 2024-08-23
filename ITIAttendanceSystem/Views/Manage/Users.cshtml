@@ -1,0 +1,45 @@
+﻿@model IEnumerable<User>
+@{
+    Layout = "_ManageLayout";
+    ViewData["Title"] = "Users";
+}
+<div class="d-flex py-2 justify-content-end mb-2">
+    <a asp-action="AddUser" asp-controller="Manage" class="btn btn-primary d-inline-block px-3">Add User</a>
+</div>
+<table class="table table-bordered table-hover" >
+    <thead>
+        <tr>
+            <th>User Id</th>
+            <th>User Email</th>
+            <th>User Name</th>
+            <th>Is Verified</th>
+            <th>User Role</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() <= 0)
+        {
+            <tr>
+                <td class="h2" colspan="6">No Users To display</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.UserId</td>
+                    <td>@user.Email</td>
+                    <td>@user.Name</td>
+                    <td>@(user.Verified != null && user.Verified.Value == true ? "Verified" : "Not Verified")</td>
+                    <td>@user.Role.RoleName</td>
+                    <td>
+                        <a asp-action="UpdateUser" asp-controller="Manage" asp-route-id="@user.UserId" class="btn btn-warning d-inline-block px-3">Update</a>
+                        <a asp-action="DeleteUser" asp-controller="Manage" asp-route-id="@user.UserId" class="btn btn-danger d-inline-block px-3">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

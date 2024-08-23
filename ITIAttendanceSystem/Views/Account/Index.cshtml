@@ -1,0 +1,56 @@
+﻿@model User
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = $"{Model.Name}";
+}
+
+<div class="container bg-info text-black fw-bold p-3">
+    <div class="d-flex justify-content-center mb-3">
+        @if (Model.UserImg !=null)
+        {
+            <img width="300" height="300" class="figure-img border" src="/imgs/users/@Model.UserImg" />
+        }
+    </div>
+    <div class="row px-5">
+        <p class="col-1">Name:</p>
+        <p class="col-11">@Model.Name</p>
+    </div>
+    <div class="row px-5">
+        <p class="col-1">Email:</p>
+        <p class="col-11">@Model.Email</p>
+    </div>
+    <div class="row  px-5">
+        <p class="col-1">Program:</p>
+        <p class="col-3">@(Model.Intake?.Program?.ProgramName ?? "")</p>
+        <p class="col-1">Intake:</p>
+        <p class="col-3">@(Model.Intake?.IntakeName ?? "")</p>
+        <p class="col-1">Department:</p>
+        <p class="col-3">@(Model.Department?.DeptName ?? "")</p>
+    </div>
+    @if (User.IsInRole("Student"))
+    {
+        <div class="row px-5">
+            <p class="col-1">My Card:</p>
+            <p class="col-11"><a asp-action="PrintStudentCard" asp-controller="Manage" asp-route-id="@Model.UserId">Get The Card</a></p>
+        </div>
+        @if (Model.AttendanceRecords.FirstOrDefault(ar=> ar.UserId==Model.UserId &&  ar.AttendanceDate.Date == DateTime.Today) == null)
+        {
+            <div class="d-felx px-5 text-center">
+                <a class="btn btn-success px-4" asp-action="Attend" asp-controller="Manage" asp-route-id="@Model.UserId">Attend</a>
+            </div>
+        }
+    }
+    <form asp-action="UpdateUserImage" asp-controller="Account" enctype="multipart/form-data" method="post" class="px-5">
+        <p class="h3">Update Image</p>
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="row my-2">
+            <div class="col-4">
+                <input type="file" name="img" class="form-control" />
+            </div>
+            <div class="col-2">
+                <input type="submit" class="btn btn-primary px-4" value="Update Image" />
+            </div>
+        </div>
+    </form>
+</div>
+

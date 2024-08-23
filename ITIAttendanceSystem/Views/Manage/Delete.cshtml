@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "_ManageLayout";
+    ViewData["Title"] = $"Deleting {ViewBag.Name}";
+}
+
+<div class="alert alert-danger d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+    <div>
+        <h2>Are You Sure You want to Delete @ViewBag.Name?</h2>
+        <form method="post">
+            <input hidden name="@ViewBag.FieldName" value="@ViewBag.Id" />
+            <button type="submit" class="btn btn-danger px-5">Yes</button>
+            <a asp-action="@ViewBag.ActionName" asp-controller="Manage" class="btn btn-warning mx-2 px-5">No</a>
+        </form>
+    </div>
+</div>
+

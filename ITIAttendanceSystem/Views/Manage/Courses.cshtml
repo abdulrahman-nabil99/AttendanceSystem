@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Course>
+@{
+    Layout = "_ManageLayout";
+    ViewData["Title"] = "Courses";
+}
+
+<div class="d-flex py-2 justify-content-end mb-2">
+    <a asp-action="AddCourse" asp-controller="Manage" class="btn btn-primary d-inline-block px-3">Add Course</a>
+</div>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Duration (Hours)</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() <= 0)
+        {
+            <tr>
+                <td class="h2" colspan="4">No Courses To display</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var course in Model)
+            {
+                <tr>
+                    <td>@course.CourseId</td>
+                    <td>@course.CourseName</td>
+                    <td>@course.CourseDuration</td>
+                    <td>
+                        <a asp-action="UpdateCourse" asp-controller="Manage" asp-route-id="@course.CourseId" class="btn btn-warning d-inline-block px-3">Update</a>
+                        <a asp-action="DeleteCourse" asp-controller="Manage" asp-route-id="@course.CourseId" class="btn btn-danger d-inline-block px-3">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Intake>
+@{
+    Layout = "_ManageLayout";
+    ViewData["Title"] = "Intakes";
+}
+<div class="d-flex py-2 justify-content-end mb-2">
+    <a asp-action="AddIntake" asp-controller="Manage" class="btn btn-primary d-inline-block px-3">Add Intake</a>
+</div>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Program</th>
+            <th>Status</th>
+            <th>Departments</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() <= 0)
+        {
+            <tr>
+                <td class="h2" colspan="6">No Intakes To display</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var intake in Model)
+            {
+                <tr>
+                    <td>@intake.IntakeId</td>
+                    <td>@intake.IntakeName</td>
+                    <td>@intake.Program.ProgramName</td>
+                    <td>@(intake.IsOpen != null && intake.IsOpen.Value == true ? "Open" : "Closed")</td>
+                    <td>@foreach(var intakeDept in intake.IntakeDepartments)
+                        {
+                            <li>@intakeDept.Department.DeptName</li>
+                        }
+                    </td>
+                    <td>
+                        @if (Model != null && intake.IsOpen != false)
+                        {
+                            <a asp-action="UpdateIntakeDepartments" asp-controller="Manage" asp-route-id="@intake.IntakeId" class="btn btn-success d-inline-block px-3">Update Departments</a>
+                        }
+                        <a asp-action="UpdateIntake" asp-controller="Manage" asp-route-id="@intake.IntakeId" class="btn btn-warning d-inline-block px-3">Update</a>
+                        <a asp-action="DeleteIntake" asp-controller="Manage" asp-route-id="@intake.IntakeId" class="btn btn-danger d-inline-block px-3">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

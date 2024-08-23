@@ -1,0 +1,63 @@
+﻿@model Department
+@{
+    Layout = "_ManageLayout";
+    ViewData["Title"] = Model is null ? "New Department" : $"Updating {Model.DeptName}";
+}
+
+<div class="container">
+    <form method="post" class="bg-info text-dark  p-5" asp-action="@(Model is null?"AddDepartment":"UpdateDepartment")" asp-controller="Manage">
+        <h2 class="text-center">@(Model is null ? "Create New Department" : $"Updating {Model.DeptName}")</h2>
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="row mb-3 mx-0 justify-content-center">
+            @if (Model != null)
+            {
+                <input hidden asp-for="DeptId" />
+            }
+            <div class="col-12">
+                <label asp-for="DeptName" class="fw-bold d-block form-label mt-3">Name</label>
+                <input asp-for="DeptName" class="form-control" />
+                <span asp-validation-for="DeptName"></span>
+            </div>
+
+            <div class="col-12">
+                <label asp-for="DeptCapacity" class="fw-bold d-block form-label mt-3">Capacity</label>
+                <input asp-for="DeptCapacity" class="form-control" />
+                <span asp-validation-for="DeptCapacity"></span>
+            </div>
+
+            <div class="col-12">
+                <label asp-for="ManagerId" class="fw-bold d-block form-label mt-3">Manager</label>
+                <select asp-for="ManagerId" class="form-select" asp-items="@ViewBag.Instructors">
+                    <option value="" selected>Choose...</option>
+                </select>
+                <span asp-validation-for="ManagerId"></span>
+            </div>
+
+            <label asp-for="IsAvailable" class="col-12 fw-bold d-inline-block form-label mt-3">Open:</label>
+            <div class="d-inline-block">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" id="yesopen" asp-for="IsAvailable" type="radio" value="true">
+                    <label class="form-check-label" for="yesopen" asp-for="IsAvailable">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" id="notopen" asp-for="IsAvailable" type="radio" value="false">
+                    <label class="form-check-label" for="notopen" asp-for="IsAvailable">No</label>
+                </div>
+            </div>
+            <span asp-validation-for="IsAvailable"></span>
+
+        </div>
+        <div class="mt-2 d-flex justify-content-end gap-3">
+            @if (Model != null)
+            {
+                <input type="hidden" name="ActionName" value="Update" />
+            }
+            <input type="submit" value="@(Model is null?"Add":"Update")" class="btn btn-success d-inline-block  px-5" />
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial">
+}

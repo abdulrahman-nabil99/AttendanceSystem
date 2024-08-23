@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "_ManageLayout";
+    ViewData["Title"] = "Add Students";
+}
+
+<form asp-action="ImportStudents" asp-controller="Manage" enctype="multipart/form-data" method="post" class="p-3">
+    <p class="h3">Select Excel File</p>
+    <p>It should have Header, With the following Order</p>
+    <p>Name, Email, Department Id, Intake Id</p>
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="row my-2">
+        <div class="col-4">
+            <input type="file" name="file" class="form-control" />
+        </div>
+        <div class="col-2">
+            <input type="submit" class="btn btn-primary px-4" value="Import Students" />
+        </div>
+    </div>
+</form>

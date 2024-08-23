@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AttendanceRecord>
+@{
+    Layout = "_ManageLayout";
+    ViewData["Title"] = "Attendance";
+}
+<form asp-action="Attendance" asp-controller="Manage" method="get" class="p-3">
+    <div class="row my-2">
+        <div class="col-4">
+            <input type="date" name="targetDate" class="form-control" />
+        </div>
+        <div class="col-2">
+            <input type="submit" class="btn btn-primary px-4" value="Get Attendance" />
+        </div>
+        <div class="justify-content-end offset-4 col">
+            <a asp-action="CloseAttendance" asp-controller="Manage" class="btn btn-danger d-inline-block px-3">Close Attendance</a>
+        </div>
+    </div>
+</form>
+
+<h2 class="h2 text-info text-center">Students Attendance For <span class="text-warning">@ViewBag.Date.ToString("dddd dd MMMM yyyy")</span></h2>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Student Id</th>
+            <th>Student Name</th>
+            <th>Student Department</th>
+            <th>Status</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() <= 0)
+        {
+            <tr>
+                <td class="h2" colspan="4">No Records To display</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var record in Model)
+            {
+                <tr>
+                    <td>@record.UserId</td>
+                    <td>@record.User.Name</td>
+                    <td>@record.User.Department?.DeptName</td>
+                    <td>@if (record.IsPresent == true)
+                        {
+                            <span class="text-success">Attend</span>
+                        } else
+                        {
+                            <span class="text-danger">Absent</span>
+                        }
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
