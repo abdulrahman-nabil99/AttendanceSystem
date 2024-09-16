@@ -1,4 +1,4 @@
-# ITI Attendance System
+# Attendance System
 
 This is a web-based attendance management system built using ASP.NET Core MVC. The system allows for student management, attendance tracking, and generation of student identity cards as PDFs.
 
@@ -23,8 +23,8 @@ This is a web-based attendance management system built using ASP.NET Core MVC. T
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/ITI-Attendance-System.git
-   cd ITI-Attendance-System
+   git clone https://github.com/abdulrahman-nabil99/AttendanceSystem
+   cd AttendanceSystem
    ```
 
 2. Install the required .NET packages:
@@ -76,7 +76,7 @@ This is a web-based attendance management system built using ASP.NET Core MVC. T
 ## Project Structure
 
 ```plaintext
-ITI-Attendance-System/
+ITIAttendanceSystem/
 │
 ├── Controllers/
 │   ├── AccountController.cs
